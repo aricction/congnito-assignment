@@ -1,0 +1,50 @@
+[
+  {
+    "id": "11",
+    "name": "All Natural Italian-Style Chicken Meatballs",
+    "price": 238.85,
+    "oldprice": 245.8,
+    "image": "products/11.png",
+    "category": "fruits",
+    "type": "Hodo Fruits",
+    "rating": 4.0,
+    "span": "Save 35%",
+    "spanColor": "bg-[#3BB77E]"
+  },
+  {
+    "id": "12",
+    "name": "Angie’s Boomchickapop Sweet and womnies",
+    "price": 238.85,
+    "oldprice": 245.8,
+    "image": "products/12.png",
+    "category": "fruits",
+    "type": "Hodo Fruits",
+    "rating": 4.0,
+    "span": "Sale",
+    "spanColor": "bg-[#67BCEE]"
+  },
+  {
+    "id": "13",
+    "name": "Foster Farms Takeout Crispy Classic",
+    "price": 238.85,
+    "oldprice": 245.8,
+    "image": "products/13.png",
+    "category": "fruits",
+    "type": "Hodo Fruits",
+    "rating": 4.0,
+    "span": "Best sale",
+    "spanColor": "bg-[#F59758]"
+  },
+   {
+    "id": "14",
+    "name": "Blue Diamond Almonds Lightly Salted",
+    "price": 238.85,
+    "oldprice": 245.8,
+    "image": "products/14.png",
+    "category": "fruits",
+    "type": "Hodo Fruits",
+    "rating": 4.0,
+    "span": "Best sale",
+    "spanColor": "bg-[#F74B81]"
+  }
+]

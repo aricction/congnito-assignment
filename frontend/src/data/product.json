@@ -1,0 +1,125 @@
+[
+  {
+    "id": "1",
+    "name": "Fresh organic villa farm lomon 500gm pack",
+    "price": 28.85,
+    "oldprice": 32.8,
+    "image": "products/1.png",
+    "category": "vegetables",
+    "type":"Snack",
+    "rating": 4.0,
+    "by": "NestFood",
+    "span": "Hot",
+    "spanColor": "bg-[#F74B81]"
+    
+  },
+  {
+    "id": "2",
+    "name": "Best snakes with hazel nut pack 200gm",
+    "price": 52.85,
+    "oldprice": 55.8,
+    "image": "products/2.png",
+    "category": "fruits",
+     "type":"Hodo Foods",
+    "rating": 3.5,
+    "by":" Stouffer",
+    "span": "Sale",
+    "spanColor": "bg-[#67BCEE]"
+  },
+  {
+    "id": "3",
+    "name": "Organic fresh venila farm watermelon 5kg",
+    "price": 48.85,
+    "oldprice": 52.8,
+    "image": "products/3.png",
+    "category": "fruits",
+     "type":"Snack",
+    "rating": 4.0,
+    "by": "StarKist",
+    "span": "New",
+    "spanColor": "bg-[#3BB77E]"
+  },
+  {
+    "id": "4",
+    "name": "Fresh organic apple 1kg simla marming",
+    "price": 17.85,
+    "oldprice": 19.8,
+    "image": "products/4.png",
+    "category": "fruits",
+     "type":"Vegetables",
+    "rating": 4.0,
+    "by": "NestFood"
+  },
+  {
+    "id": "5",
+    "name": "Blue Diamond Almonds Lightly Salted Vegetables",
+    "price": 23.85,
+    "oldprice": 25.8,
+    "image": "products/5.png",
+    "category": "fruits",
+     "type":"Pet Foods",
+    "rating": 4.0,
+    "by": "NestFood",
+    "span": "-14%",
+    "spanColor": "bg-[#F59758]"
+  },
+   {
+    "id": "6",
+    "name": "Chobani Complete Vanilla Greek Yogurt",
+    "price": 54.85,
+    "oldprice": 25.8,
+    "image": "products/6.png",
+    "category": "fruits",
+     "type":"Hodo Foods",
+    "rating": 4.0,
+    "by": "NestFood"
+  },
+    {
+    "id": "7",
+    "name": "Chobani Complete Vanilla Greek Yogurt",
+    "price": 54.85,
+    "oldprice": 25.8,
+    "image": "products/7.png",
+    "category": "fruits",
+     "type":"Meats",
+    "rating": 4.0,
+    "by": " NestFood"
+  },
+    {
+    "id": "8",
+    "name": "Chobani Complete Vanilla Greek Yogurt",
+    "price": 54.85,
+    "oldprice": 25.8,
+    "image": "products/8.png",
+    "category": "fruits",
+     "type":"Snack",
+    "rating": 4.0,
+    "by": " NestFood",
+      "span": "Sale",
+    "spanColor": "bg-[#67BCEE]"
+  },
+    {
+    "id": "9",
+    "name": "Chobani Complete Vanilla Greek Yogurt",
+    "price": 54.85,
+    "oldprice": 25.8,
+    "image": "products/9.png",
+    "category": "fruits",
+     "type":"Coffee",
+    "rating": 4.0,
+    "by": "Old El Paso",
+     "span": "Hot",
+    "spanColor": "bg-[#F74B81]"
+  },
+    {
+    "id": "10",
+    "name": "Chobani Complete Vanilla Greek Yogurt",
+    "price": 54.85,
+    "oldprice": 25.8,
+    "image": "products/10.png",
+    "category": "fruits",
+     "type":"Cream",
+    "rating": 4.0,
+    "by": "Tyson"
+  }
+]
