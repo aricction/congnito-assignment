@@ -1,0 +1,43 @@
+ 
+ [
+     {
+    "id": "1",
+    "name": "Best snakes with hazel nut mix pack 200gm",
+    "price": 120.25,
+    "oldprice": 123.8,
+    "image": "products/21.png",
+    "category": "vegetables",
+    "type":"Snacks"
+    
+  },
+   {
+    "id": "2",
+    "name": "Sweet snakes crunchy nut mix 250gm pack",
+    "price": 100.00,
+    "oldprice": 110.0,
+    "image": "products/22.png",
+    "category": "vegetables",
+    "type":"Snacks"
+    
+  },
+   {
+    "id": "3",
+    "name": "Best snakes with hazel nut mix pack 200gm",
+    "price": 120.25,
+    "oldprice": 123.8,
+    "image": "products/23.png",
+    "category": "vegetables",
+    "type":"Snacks"
+    
+  },
+   {
+    "id": "4",
+    "name": "Sweet snakes crunchy nut mix 250gm pack",
+    "price": 100.00,
+    "oldprice": 110.0,
+    "image": "products/24.png",
+    "category": "vegetables",
+    "type":"Snacks"
+    
+  }
+ ]

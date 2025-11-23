@@ -15,6 +15,7 @@ import { useCartStore } from "@/store/cart-store";
 import { StarIcon } from "@heroicons/react/24/solid";
 import ProductFilterComponent from "@/app/components/product-filter-component/page";
 import Footer from "@/app/components/footer-component/page";
+import Products from "@/data/popularproduct.json";
 
 export default function ProductDetailsPage() {
   const [quantity, setQuantity] = useState(1);
@@ -22,8 +23,12 @@ export default function ProductDetailsPage() {
   const productId = params.id as string;
   const Stars = Array(5).fill(0);
 
-  const { getProductById , getBestSellingById , getSelectedDealsProduct } = useProductStore();
-const product = getProductById(productId) || getBestSellingById(productId) || getSelectedDealsProduct(productId);
+  const { getProductById, getBestSellingById, getSelectedDealsProduct } =
+    useProductStore();
+  const product =
+    getProductById(productId) ||
+    getBestSellingById(productId) ||
+    getSelectedDealsProduct(productId);
 
   const addToCart = useCartStore((state) => state.addToCart);
 
@@ -56,7 +61,7 @@ const product = getProductById(productId) || getBestSellingById(productId) || ge
       </Card>
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-8xl mx-auto px-4 py-8 flex flex-col md:flex-row gap-8">
-            <ProductFilterComponent/>
+          <ProductFilterComponent />
           <Card className="w-[469px] h-[590px] relative overflow-hidden rounded-lg">
             <Image
               src={`/${product.image}`}
@@ -87,14 +92,26 @@ const product = getProductById(productId) || getBestSellingById(productId) || ge
                 </p>
               </div>
 
-              <div className="text-[16px] mt-[30px] font-bold flex flex-col">
-                <p className="">Brand</p>
-                <p className="mt-[10px]">Flavour</p>
-                <p className="mt-[10px]">Diet Type</p>
-                <p className="mt-[10px]">Weight</p>
-                <p className="mt-[10px]">Speciality</p>
-                <p className="mt-[10px]">Info</p>
-                <p className="mt-[10px]">Items</p>
+              <div className="flex space-x-12">
+                <div className="text-[16px] mt-[30px] font-bold flex flex-col">
+                  <p className="">Brand</p>
+                  <p className="mt-[10px]">Flavour</p>
+                  <p className="mt-[10px]">Diet Type</p>
+                  <p className="mt-[10px]">Weight</p>
+                  <p className="mt-[10px]">Speciality</p>
+                  <p className="mt-[10px]">Info</p>
+                  <p className="mt-[10px]">Items</p>
+                </div>
+
+                <div className="text-[16px] text-[#777777] mt-[30px] flex flex-col">
+                  <p className="">: LOREM IPSUM </p>
+                  <p className="mt-[10px]">: Lorem ipsum </p>
+                  <p className="mt-[10px]">: Lorem ipsum </p>
+                  <p className="mt-[10px]">: Lorem ipsum </p>
+                  <p className="mt-[10px]">: Lorem ipsum </p>
+                  <p className="mt-[10px]">: Lorem ipsum </p>
+                  <p className="mt-[10px]">: 1</p>
+                </div>
               </div>
 
               <div className="flex items-center mt-[38px]">
@@ -140,9 +157,18 @@ const product = getProductById(productId) || getBestSellingById(productId) || ge
         <div className=" justify-center flex mt-5 left-[120px] pb-12">
           <Card className="w-[996px] p-4 rounded-md">
             <div>
-              <h1 className="font-semibold text-[16px] text-[#F53E32] cursor-pointer pb-[23px] border-b">
+              <div className="flex space-x-12 border-b">
+
+              <h1 className="font-semibold text-[16px] text-[#F53E32] cursor-pointer pb-[23px] border-b border-[#64B496]">
                 Description
               </h1>
+              <h1 className="font-semibold text-[16px] text-[##2B2B2D] cursor-pointer pb-[23px] border-b">
+                Information
+              </h1>
+              <h1 className="font-semibold text-[16px] text-[##2B2B2D] cursor-pointer pb-[23px] border-b">
+               Review
+              </h1>
+              </div>
               <p className="font-normal text-[14px] text-[#7A7A7A] mt-[32px]">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Error
                 in vero sapiente odio, error dolore vero temporibus consequatur,
@@ -156,25 +182,68 @@ const product = getProductById(productId) || getBestSellingById(productId) || ge
             </div>
             <div>
               <h1 className="font-semibold text-[16px] text-[#2B2B2D] py-[30px] pb-[23px] border-b">
-               Packaging & Delivery
+                Packaging & Delivery
               </h1>
               <div>
-              <p className="font-normal text-[14px] text-[#7A7A7A] mt-[32px]">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Error
-                in vero perferendis dolor! Quis vel consequuntur repellat
-                distinctio rem. Corrupti ratione alias odio, error dolore
-                temporibus consequatur, nobis veniam odit laborum dignissimos
-                consectetur quae vero in perferendis provident quis.
-              </p>
+                <p className="font-normal text-[14px] text-[#7A7A7A] mt-[32px]">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Error
+                  in vero perferendis dolor! Quis vel consequuntur repellat
+                  distinctio rem. Corrupti ratione alias odio, error dolore
+                  temporibus consequatur, nobis veniam odit laborum dignissimos
+                  consectetur quae vero in perferendis provident quis.
+                </p>
               </div>
             </div>
           </Card>
         </div>
-        
+        <div className="flex flex-col items-center justify-center text-center mt-12">
+          <h1 className="font-bold text-[32px]">Popular Products</h1>
+          <div className="w-[600px]">
+            <p className="text-[#7A7A7A]">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et viverra maecenas accumsan
+              lacus vel facilisis.
+            </p>
+          </div>
+        </div>
+        <div className="flex gap-4 mt-8 pb-12">
+          {Products &&
+            Products.length > 0 &&
+            Products.map((item, idx) => {
+              return (
+                <Card className="p-3 gap-1">
+                  <div
+                    key={idx}
+                    className="relative w-full h-full rounded-lg overflow-hidden border border-gray-200"
+                  >
+                    <img
+                      src={`/${item.image}`}
+                      alt={item.name}
+                      className="object-cover w-full h-full"
+                    />
+                  </div>
+                  <div className="flex flex-col items-center justify-center text-center">
+                    <p className="text-[#777777]">{item.type}</p>
+                    <p className="px-[32px] text-[15px] font-semibold mt-2">
+                      {item.name}
+                    </p>
+                    <div className="flex items-center space-x-2 mt-4">
+                      <span className="text-[#F53E32] font-bold text-[16px]">
+                        ${item.price}
+                      </span>
+                      <span className="text-[13px] line-through text-gray-400">
+                        ${item.oldprice}
+                      </span>
+                    </div>
+                  </div>
+                </Card>
+              );
+            })}
+        </div>
       </div>
       <div>
-          <Footer />
-        </div>
+        <Footer />
+      </div>
     </>
   );
 }

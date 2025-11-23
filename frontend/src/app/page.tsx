@@ -47,61 +47,105 @@ export default function Home() {
         <Navbar />
         <SearchBar />
       </div>
-
       <div className="h-[700px] w-auto bg-[#f0f1f0] relative">
-        <div className="absolute top-[200px] left-24 w-[500px] z-[50]">
-          <div className="flex items-center">
-            <p className="text-[#F53E32] text-[20px] font-bold underline">
-              100%
+        <div className="absolute top-[200px] left-24 right-0 w-full z-[50] flex justify-between items-start">
+          <div className="w-[500px]">
+            <div className="flex items-center">
+              <p className="text-[#F53E32] text-[20px] font-bold underline">
+                100%
+              </p>
+              <p className="px-2 text-[20px] font-bold">Organic Vegetables</p>
+            </div>
+
+            <p className="text-[55px] font-extrabold mt-2">
+              The best way to stuff your wallet.
             </p>
-            <p className="px-2 ext-[20px] font-bold">Organic Vegetables</p>
+
+            <p className="text-[#7A7A7A] text-[15px] font-normal mt-2">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet
+              reiciendis beatae consequuntur.
+            </p>
+
+            <div className="mt-[40px] -z-999">
+              <div className="relative w-[450px] z-30">
+                <PaperAirplaneIcon className="w-5 h-5 text-gray-500 absolute left-5 top-1/2 -translate-y-1/2" />
+
+                <input
+                  type="text"
+                  placeholder="Your email address"
+                  className="w-full h-[64px] pl-14 pr-32 bg-white rounded-full 
+              focus:outline-none focus:ring-2 focus:ring-[#64B496]"
+                />
+
+                <button
+                  className="absolute right-2 top-1/2 -translate-y-1/2 h-[50px] px-6 
+              bg-[#3BB77E] text-white rounded-full"
+                >
+                  Subscribe
+                </button>
+              </div>
+            </div>
           </div>
 
-          <p className="text-[55px] font-extrabold">
-            The best way to stuff your wallet.
-          </p>
-
-          <p className="text-[#7A7A7A] text-[15px] font-normal">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet
-            reiciendis beatae consequuntur.
-          </p>
-
-          <div className="mt-[40px]  -z-999">
-            <div className="relative w-[450px] z-30">
-              <PaperAirplaneIcon className="w-5 h-5 text-gray-500 absolute left-5 top-1/2 -translate-y-1/2" />
-
-              <input
-                type="text"
-                placeholder="Your email address"
-                className="w-full h-[64px] pl-14 pr-32 bg-white rounded-full 
-                 focus:outline-none focus:ring-2 focus:ring-[#64B496]"
-              />
-
-              <button
-                className="absolute right-2 top-1/2 -translate-y-1/2 h-[50px] px-6 
-                 bg-[#3BB77E] text-white rounded-full"
-              >
-                Subscribe
-              </button>
-            </div>
+          <div className="relative z-30 mr-12">
+            <img
+              src="/asset/banner2.png"
+              alt="banner"
+              className="object-contain"
+            />
           </div>
         </div>
       </div>
 
       <div className="px-24 w-full mt-[75px] pb-10">
         <div className="flex justify-center gap-16">
-          <img
-            src="/asset/banner-1.png.png"
-            className="w-[30%] max-w-[500px]"
-          />
-          <img
-            src="/asset/banner-2.png.png"
-            className="w-[30%] max-w-[500px]"
-          />
-          <img
-            src="/asset/banner-3.png.png"
-            className="w-[30%] max-w-[500px]"
-          />
+          <div className="relative w-full max-w-[500px]">
+            <img
+              src="/asset/banner-1.png.png"
+              className="w-full"
+              alt="banner"
+            />
+
+            <div className="absolute  inset-0 flex flex-col justify-center items-start">
+              <div className="mx-12 w-[203px]">
+                <p className="text-black text-[24px] font-bold text-start ">
+                  Everyday Fresh & Clean with Our Products
+                </p>
+                <button className="mt-12 px-6 py-2 bg-[#F53E32] text-white rounded-md">
+                  Shop now
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div className="relative w-full max-w-[500px]">
+            <img src="/asset/banner-2.png" className="w-full" alt="banner" />
+
+            <div className="absolute  inset-0 flex flex-col justify-center items-start">
+              <div className="mx-12 w-[203px]">
+                <p className="text-black text-[24px] font-bold text-start ">
+                  Make your Breakfast Healthy and Easy
+                </p>
+                <button className="mt-12 px-6 py-2 bg-[#F53E32] text-white rounded-md">
+                  Shop now
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className="relative w-full max-w-[500px]">
+            <img src="/asset/banner-3.png" className="w-full" alt="banner" />
+
+            <div className="absolute  inset-0 flex flex-col justify-center items-start">
+              <div className="mx-12 w-[203px]">
+                <p className="text-black text-[24px] font-bold text-start ">
+                  The best Organic Products Online
+                </p>
+                <button className="mt-12 px-6 py-2 bg-[#F53E32] text-white rounded-md">
+                  Shop now
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -171,89 +215,97 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="relative px-32 pb-12 z-20 mt-16 rounded-md">
+      <div className="relative px-32 z-20 mt-16 rounded-md">
         <img
           src="/asset/bg.png"
-          className="w-[1600px]  absolute h-full object-cover z-10"
+          className="w-[1600px] absolute h-full object-cover z-10"
+          alt="background"
         />
 
-        <div className="w-1/2 py-8 px-32 z-20">
-          <p className="mt-8 font-bold text-[40px]">
-            Stay home & get your daily needs from our shop
-          </p>
-        </div>
+        <div className="px-32 z-40 flex justify-between items-center">
+          <div className="w-1/2 py-8">
+            <p className="mt-8 font-bold text-[40px]">
+              Stay home & get your daily needs from our shop
+            </p>
+            <p className="text-[18px] text-[#7E7E7E]">
+              Start Your Daily Shopping with Nest Mart
+            </p>
 
-        <div className="px-32 z-20">
-          <p className="text-[18px]">
-            Start Your Daily Shopping with Nest Mart
-          </p>
-        </div>
+            <div className="relative w-[450px] z-30 mt-8">
+              <PaperAirplaneIcon className="w-5 h-5 text-gray-500 absolute left-5 top-1/2 -translate-y-1/2" />
+              <input
+                type="text"
+                placeholder="Your email address"
+                className="w-full h-[64px] pl-14 pr-32 bg-white rounded-full 
+             focus:outline-none focus:ring-2 focus:ring-[#64B496]"
+              />
+              <button
+                className="absolute right-2 top-1/2 -translate-y-1/2 h-[50px] px-6 
+             bg-[#3BB77E] text-white rounded-full"
+              >
+                Subscribe
+              </button>
+            </div>
+          </div>
 
-        <div className="mt-[40px] px-32 z-40">
-          <div className="relative w-[450px] z-30">
-            <PaperAirplaneIcon className="w-5 h-5 text-gray-500 absolute left-5 top-1/2 -translate-y-1/2" />
-
-            <input
-              type="text"
-              placeholder="Your email address"
-              className="w-full h-[64px] pl-14 pr-32 bg-white rounded-full 
-                 focus:outline-none focus:ring-2 focus:ring-[#64B496]"
+          <div className="relative z-30 mt-12">
+            <img
+              src="/asset/banner.png"
+              alt="banner"
+              className="object-contain"
             />
-
-            <button
-              className="absolute right-2 top-1/2 -translate-y-1/2 h-[50px] px-6 
-                 bg-[#3BB77E] text-white rounded-full"
-            >
-              Subscribe
-            </button>
           </div>
         </div>
       </div>
 
       <div className="mt-6 px-32 flex pb-6 gap-2">
         <div className="bg-[#F4F6FA] p-4 w-[312px] flex space-x-6  items-center justify-start text-center">
-          <img src="/asset/icon-1.png" className="w-10 h-10"/>
+          <img src="/asset/icon-1.png" className="w-10 h-10" />
           <div>
-          <p className="font-semibold text-[18px]">Best prices & offers</p>
-          <p>Orders $50 or more</p>
+            <p className="font-semibold text-[18px]">Best prices & offers</p>
+            <p>Orders $50 or more</p>
           </div>
         </div>
 
         <div className="bg-[#F4F6FA] p-4 w-[312px] flex space-x-6  items-center justify-start text-center">
-          <img src="/asset/icon-2.png" className="w-10 h-10"/>
+          <img src="/asset/icon-2.png" className="w-10 h-10" />
           <div>
-          <p className="font-semibold text-[18px]">Free delivery</p>
-          <p className="text-[16px] text-[#ADADAD] font-sm">24/7 amazing services</p>
-          </div>
-        </div>
-
-       <div className="bg-[#F4F6FA] p-4 w-[312px] flex space-x-6  items-center justify-start text-center">
-          <img src="/asset/icon-3.png" className="w-10 h-10"/>
-          <div>
-          <p className="font-semibold text-[18px]">Great daily deal</p>
-          <p className="text-[16px] text-[#ADADAD] font-sm">When you sign up</p>
-          </div>
-        </div>
-
-       <div className="bg-[#F4F6FA] p-4 w-[312px] flex space-x-6  items-center justify-start text-center">
-          <img src="/asset/icon-4.png" className="w-10 h-10"/>
-          <div>
-          <p className="font-semibold text-[18px]">Wide assortment</p>
-          <p className="text-[16px] text-[#ADADAD] font-sm">Mega Discounts</p>
+            <p className="font-semibold text-[18px]">Free delivery</p>
+            <p className="text-[16px] text-[#ADADAD] font-sm">
+              24/7 amazing services
+            </p>
           </div>
         </div>
 
         <div className="bg-[#F4F6FA] p-4 w-[312px] flex space-x-6  items-center justify-start text-center">
-          <img src="/asset/icon-5.png" className="w-10 h-10"/>
+          <img src="/asset/icon-3.png" className="w-10 h-10" />
           <div>
-          <p className="font-semibold text-[18px]">Easy returns</p>
-          <p className="text-[16px] text-[#ADADAD] font-sm">Within 30 days</p>
+            <p className="font-semibold text-[18px]">Great daily deal</p>
+            <p className="text-[16px] text-[#ADADAD] font-sm">
+              When you sign up
+            </p>
+          </div>
+        </div>
+
+        <div className="bg-[#F4F6FA] p-4 w-[312px] flex space-x-6  items-center justify-start text-center">
+          <img src="/asset/icon-4.png" className="w-10 h-10" />
+          <div>
+            <p className="font-semibold text-[18px]">Wide assortment</p>
+            <p className="text-[16px] text-[#ADADAD] font-sm">Mega Discounts</p>
+          </div>
+        </div>
+
+        <div className="bg-[#F4F6FA] p-4 w-[312px] flex space-x-6  items-center justify-start text-center">
+          <img src="/asset/icon-5.png" className="w-10 h-10" />
+          <div>
+            <p className="font-semibold text-[18px]">Easy returns</p>
+            <p className="text-[16px] text-[#ADADAD] font-sm">Within 30 days</p>
           </div>
         </div>
       </div>
 
       <div className="mt-8">
-        <Footer/>
+        <Footer />
       </div>
     </div>
   );

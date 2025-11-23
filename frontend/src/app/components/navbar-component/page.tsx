@@ -12,7 +12,7 @@ interface NavbarProps {
 
 const Navbar: FC<NavbarProps> = ({ showAuthButtons = true }) => {
   return (
-    <nav className="w-full py-3 px-5  flex items-center justify-between mx-auto shadow-md">
+    <nav className="w-full py-3 px-[370px]  flex items-center justify-between mx-auto shadow-md">
     
      <div  className="justify-center">
      <Bars3Icon className="w-6 h-6 text-gray-700 border " />

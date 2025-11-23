@@ -345,3 +345,5 @@ This is a private project. Please follow the existing code style and patterns wh
 
 **Note**: Make sure to set up all environment variables before running the application. The application requires MongoDB and SendGrid to function properly.
 
+**Note**: Check on spam folder for OTP and Order details.
+
