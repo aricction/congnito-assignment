@@ -40,6 +40,20 @@ export default function ProductDetailsPage() {
     );
   }
 
+  // Calculate total price based on quantity
+  const calculateTotalPrice = () => {
+    const price = product.price;
+    return price * quantity;
+  };
+
+  const calculateTotalOldPrice = () => {
+    const oldPrice =  product.oldprice;
+    return oldPrice * quantity;
+  };
+
+  const totalPrice = calculateTotalPrice();
+  const totalOldPrice = calculateTotalOldPrice();
+
   const handleIncrement = () => setQuantity((prev) => prev + 1);
   const handleDecrement = () =>
     setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
@@ -116,12 +130,19 @@ export default function ProductDetailsPage() {
 
               <div className="flex items-center mt-[38px]">
                 <p className="text-2xl font-semibold text-[#F53E32]">
-                  ${product.price}
+                  ${totalPrice.toFixed(2)}
                 </p>
 
-                <p className="text-gray-500 line-through text-lg">
-                  ${product.oldprice}
-                </p>
+                {product.oldprice > 0 && (
+                  <p className="text-gray-500 line-through text-lg ml-2">
+                    ${totalOldPrice.toFixed(2)}
+                  </p>
+                )}
+                {quantity > 1 && (
+                  <p className="text-sm text-[#7A7A7A] ml-2">
+                    (${( product.price).toFixed(2)} × {quantity})
+                  </p>
+                )}
               </div>
             </div>
 
@@ -211,9 +232,8 @@ export default function ProductDetailsPage() {
             Products.length > 0 &&
             Products.map((item, idx) => {
               return (
-                <Card className="p-3 gap-1">
+                <Card key={item.id || `product-${idx}`} className="p-3 gap-1">
                   <div
-                    key={idx}
                     className="relative w-full h-full rounded-lg overflow-hidden border border-gray-200"
                   >
                     <img

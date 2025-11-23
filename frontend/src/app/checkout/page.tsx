@@ -152,47 +152,67 @@ export default function ProductCheckoutPage() {
           {/* Summary Card */}
           <div className="p-4 border rounded mb-4">
             <p className="font-bold text-[20px]">Summary</p>
-            <p className="text-[#7A7A7A] text-[13px] mt-4">sub-Total</p>
-            <p className="text-[#7A7A7A] text-[13px]">Delivery Charges</p>
+            <div className="flex justify-between items-center mt-4">
+              <p className="text-[#7A7A7A] text-[13px]">Sub-Total</p>
+              <p className="text-[#7A7A7A] text-[13px] font-medium">${getCartTotal().toFixed(2)}</p>
+            </div>
+            <div className="flex justify-between items-center mt-2">
+              <p className="text-[#7A7A7A] text-[13px]">Delivery Charges</p>
+              <p className="text-[#7A7A7A] text-[13px] font-medium">
+                {selectedDelivery.includes("Free") ? "$0.00" : "$5.00"}
+              </p>
+            </div>
             <div className="flex justify-between items-center border-t mt-3 pt-3">
               <p className="font-medium">Total Amount:</p>
-              <p className="font-semibold">${getCartTotal()}</p>
+              <p className="font-semibold text-[18px] text-[#F53E32]">
+                ${(getCartTotal() + (selectedDelivery.includes("Free") ? 0 : 5)).toFixed(2)}
+              </p>
             </div>
 
-            {cartItems.map((item) => (
-              <Card
-                key={item.id}
-                className="flex items-start gap-4 mt-3 p-4 rounded"
-              >
-                <div className="flex">
-                  <img
-                    className="w-[80px] h-[80px] object-cover rounded-md"
-                    src={`/${item.image}`}
-                    alt={item.name}
-                  />
-                  <div className="px-2 flex flex-col justify-center">
-                    <div className="font-semibold text-[16px]">{item.name}</div>
-                    <div className="flex mt-1">
-                      {stars.map((_, index) => (
-                        <StarIcon
-                          key={index}
-                          className="w-4 h-4"
-                          color={index < item.rating ? "#F4A263" : "#E4E5E9"}
-                        />
-                      ))}
-                    </div>
-                    <div className="flex items-center space-x-2 mt-1">
-                      <span className="text-[#3BB77E] font-bold text-[16px]">
-                        ${item.price}
-                      </span>
-                      <span className="text-[13px] line-through text-gray-400">
-                        ${item.oldprice}
-                      </span>
+            {cartItems.map((item) => {
+              const itemTotal = item.price * item.quantity;
+              const itemOldTotal = item.oldprice * item.quantity;
+              
+              return (
+                <Card
+                  key={item.id}
+                  className="flex items-start gap-4 mt-3 p-4 rounded"
+                >
+                  <div className="flex w-full">
+                    <img
+                      className="w-[80px] h-[80px] object-cover rounded-md"
+                      src={`/${item.image}`}
+                      alt={item.name}
+                    />
+                    <div className="px-2 flex flex-col justify-between w-full">
+                      <div>
+                        <div className="font-semibold text-[16px]">{item.name}</div>
+                        <div className="flex mt-1">
+                          {stars.map((_, index) => (
+                            <StarIcon
+                              key={index}
+                              className="w-4 h-4"
+                              color={index < item.rating ? "#F4A263" : "#E4E5E9"}
+                            />
+                          ))}
+                        </div>
+                        <div className="flex items-center space-x-2 mt-1">
+                          <span className="text-[#3BB77E] font-bold text-[16px]">
+                            ${item.price.toFixed(2)}
+                          </span>
+                          {item.oldprice > 0 && (
+                            <span className="text-[13px] line-through text-gray-400">
+                              ${item.oldprice.toFixed(2)}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                 
                     </div>
                   </div>
-                </div>
-              </Card>
-            ))}
+                </Card>
+              );
+            })}
           </div>
 
           {/* Delivery Method */}

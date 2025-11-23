@@ -8,10 +8,10 @@ interface CartItem extends Product {
 interface CartStore {
   cartItems: CartItem[];
   addToCart: (product: Product, quantity?: number) => void;
+  updateQuantity: (productId: string, quantity: number) => void;
+  removeFromCart: (productId: string) => void;
   getCartTotal: () => number;
-    clearCart: () => void;
-
-  
+  clearCart: () => void;
 }
 
 export const useCartStore = create<CartStore>((set, get) => ({
@@ -35,11 +35,29 @@ export const useCartStore = create<CartStore>((set, get) => ({
     }
   },
 
-  clearCart: ()=>  set({ cartItems: []}),
+  updateQuantity: (productId, quantity) => {
+    if (quantity <= 0) {
+      get().removeFromCart(productId);
+      return;
+    }
+    set({
+      cartItems: get().cartItems.map((item) =>
+        item.id === productId ? { ...item, quantity } : item
+      ),
+    });
+  },
+
+  removeFromCart: (productId) => {
+    set({
+      cartItems: get().cartItems.filter((item) => item.id !== productId),
+    });
+  },
+
+  clearCart: () => set({ cartItems: [] }),
 
   getCartTotal: () => {
     return get().cartItems.reduce((total, item) => {
-      const price = typeof item.price === "string" ? parseFloat(item.price) : item.price;
+      const price = item.price;
       return total + price * item.quantity;
     }, 0);
   },

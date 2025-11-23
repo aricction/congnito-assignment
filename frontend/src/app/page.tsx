@@ -150,7 +150,22 @@ export default function Home() {
       </div>
 
       <div className="px-32 w-full pb-10 ">
-        <p className="font-bold text-[32px]">Popular Products</p>
+        <div className="flex justify-between items-center">
+          <div>
+            <p className="font-bold text-[32px]">Popular Products</p>
+          </div>
+          <div className="flex space-x-8">
+
+          <p className="font-semibold text-[16px] text-[#3BB77E]">All</p>
+          <p className="font-semibold text-[16px]">Milks & Dairies</p>
+          <p className="font-semibold text-[16px]">Coffes & Teas</p>
+          <p className="font-semibold text-[16px]">Pet Foods</p>
+          <p className="font-semibold text-[16px]">Meats</p>
+          <p className="font-semibold text-[16px]">Vegetables</p>
+          <p className="font-semibold text-[16px]">Fruits</p>
+          </div>
+        </div>
+
         <div className="mt-6">
           <ProductGridPage products={products} variant="home" />
         </div>

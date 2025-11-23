@@ -2,7 +2,7 @@
 
 import React, { FC, useState } from "react";
 import Link from "next/link";
-import { UserIcon, HeartIcon, ShoppingCartIcon } from "@heroicons/react/24/outline";
+import { UserIcon, HeartIcon, ShoppingCartIcon, MagnifyingGlassIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
 import AuthModal from "../account-login-modal/page";
 
 const SearchBar: FC = () => {
@@ -16,11 +16,24 @@ const SearchBar: FC = () => {
       <nav className="w-full py-3 px-5 flex items-center justify-center mx-auto border-b border-[#E9E9E9]">
         <img src="/asset/navbar.png" alt="Cognito logo" className="h-auto w-auto px-6" />
 
-        <input
-          type="text"
-          placeholder="Search For items..."
-          className="w-[600px] h-[45px] px-4 outline outline-2 outline-[#64B496] focus:outline-[#64B496] rounded-[5px]"
-        />
+        <div className="relative w-[600px]">
+          <input
+            type="text"
+            placeholder="Search For items..."
+            className="w-full h-[45px] pl-4 pr-24 outline outline-2 outline-[#64B496] focus:outline-[#64B496] rounded-[5px]"
+          />
+
+          <div className="absolute top-0 right-0 h-full flex items-center  ">
+            <button className="flex items-center px-3 h-full border-x border-[#64B496] text-black rounded-r-[5px]">
+              <span className="text-sm font-medium">All Categories</span>
+              <ChevronDownIcon className="w-4 h-4 ml-1" />
+            </button>
+
+            <button className="flex items-center justify-center px-3 h-full bg-[#F53E32] text-white rounded-r-[5px]">
+              <MagnifyingGlassIcon className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
 
         <ul className="flex items-center space-x-6 px-12">
           <li>

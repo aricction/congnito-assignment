@@ -9,8 +9,12 @@ interface Props {
 export default function ProductGridPage({ products , variant}: Props) {
   return (
 <div className="w-full flex flex-wrap gap-6 py-6">
-      {products.map((product) => (
-        <ProductCard key={product.id} product={product} variant={variant} />
+      {products.map((product, index) => (
+        <ProductCard 
+          key={product.id || `product-${index}`} 
+          product={product} 
+          variant={variant} 
+        />
       ))}
     </div>
   );
