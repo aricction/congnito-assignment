@@ -6,19 +6,38 @@ import Navbar from "../components/navbar-component/page";
 import SearchBar from "../components/searchbar-component/page";
 import { StarIcon } from "@heroicons/react/24/solid";
 import { useEffect, useState } from "react";
-import { verifyOtp, sendOtp } from "@/lib/api/auth-api";
-import { useSearchParams, useRouter } from "next/navigation";
+import { verifyOtp, sendOtp, placeOrder } from "@/lib/api/auth-api";
+import { useRouter } from "next/navigation";
 import { OrderData } from "../types/type-for-order";
-import { placeOrder } from "@/lib/api/auth-api";
-import { useAuthStore } from "@/store/auth-store";
+import { useAuthStore, authStore } from "@/store/auth-store";
+import Footer from "../components/footer-component/page";
+
+// Component to safely read email query param
+function CheckoutEmail({
+  onEmailChange,
+}: {
+  onEmailChange: (email: string) => void;
+}) {
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const email = params.get("email") ?? "";
+    onEmailChange(email);
+  }, [onEmailChange]);
+  return null;
+}
 
 export default function ProductCheckoutPage() {
   const stars = Array(5).fill(0);
-
   const { cartItems, getCartTotal, clearCart } = useCartStore();
-  const params = useSearchParams();
-  const email = params.get("email") ?? "";
+  const storeLoggedIn = useAuthStore((state) => state.isLoggedIn);
+  const setLoggedIn = useAuthStore((state) => state.setLoggedIn);
+  const router = useRouter();
+
+  const [emailInput, setEmailInput] = useState("");
   const [message, setMessage] = useState("");
+  const [otp, setOtp] = useState("");
+  const [otpVerified, setOtpVerified] = useState(false);
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [address, setAddress] = useState("");
@@ -30,13 +49,9 @@ export default function ProductCheckoutPage() {
     "Free Shipping - $0.00"
   );
   const [selectedPayment, setSelectedPayment] = useState("Cash on Delivery");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [emailInput, setEmailInput] = useState(email);
-
-  const [otp, setOtp] = useState("");
-  const router = useRouter();
-const { setLoggedIn, isLoggedIn: storeLoggedIn } = useAuthStore();
-
+  
+  // Computed value for button enabled state - use selector for reactivity
+  const isOrderButtonEnabled = otpVerified && storeLoggedIn;
 
 
 
@@ -48,13 +63,34 @@ const { setLoggedIn, isLoggedIn: storeLoggedIn } = useAuthStore();
         <div className="flex items-center justify-center min-h-screen">
           <p className="text-xl">Your cart is empty</p>
         </div>
+        <Footer />
       </>
     );
   }
 
+  const handleOtpSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const res = await verifyOtp(emailInput, otp);
+      setMessage(res.message);
+      console.log("OTP verification response:", res);
+      
+      if (res.status === "success") {
+        console.log("OTP verified successfully, updating states...");
+        setLoggedIn(true);
+        setOtpVerified(true);
+      } else {
+        console.log("OTP verification failed - status is not 'success':", res);
+      }
+    } catch (error: any) {
+      setMessage(error.response?.data?.message || "Invalid OTP");
+      console.error("OTP verification error:", error);
+    }
+  };
+
   const handlePlaceOrder = async () => {
-    if (!isLoggedIn) {
-      alert("You must be logged in to place an order.");
+    if (!storeLoggedIn || !otpVerified) {
+      alert("You must be logged in and OTP verified to place an order.");
       router.push("/auth/auth-login-form");
       return;
     }
@@ -73,9 +109,11 @@ const { setLoggedIn, isLoggedIn: storeLoggedIn } = useAuthStore();
       deliveryMethod: selectedDelivery,
       paymentMethod: selectedPayment,
     };
+
     try {
-      const res = await placeOrder(orderData);
+      await placeOrder(orderData);
       alert("Order placed successfully!");
+      clearCart();
       setFirstName("");
       setLastName("");
       setAddress("");
@@ -87,43 +125,31 @@ const { setLoggedIn, isLoggedIn: storeLoggedIn } = useAuthStore();
       setSelectedPayment("Cash on Delivery");
       setOtp("");
       setEmailInput("");
-      clearCart();
+      setOtpVerified(false);
     } catch (err) {
       console.error(err);
       alert("Failed to place order");
     }
   };
 
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
-
-    try {
-      const res = await verifyOtp(emailInput, otp);
-      setMessage(res.message);
-
-      if(res.success){
-        setLoggedIn(true);
-      }
-    } catch (error: any) {
-      setMessage(error.response?.data?.message || "Invalid OTP");
-    }
-  };
-
   return (
     <>
+      <CheckoutEmail onEmailChange={setEmailInput} />
       <Navbar />
       <SearchBar />
 
+      {/* Header */}
       <Card className="bg-[#F53E32] w-full rounded">
         <div className="mx-[312px] flex justify-between">
           <p className="font-bold text-[19px] text-white">Checkout</p>
-
           <p className="font-normal text-[14px] text-white">Home - Checkout</p>
         </div>
       </Card>
+
       <div className="max-w-7xl mx-auto px-4 py-8 flex flex-col md:flex-row gap-8">
-        {/* Card 1 */}
+        {/* Left Cards */}
         <div className="w-[440px]">
+          {/* Summary Card */}
           <div className="p-4 border rounded mb-4">
             <p className="font-bold text-[20px]">Summary</p>
             <p className="text-[#7A7A7A] text-[13px] mt-4">sub-Total</p>
@@ -144,9 +170,7 @@ const { setLoggedIn, isLoggedIn: storeLoggedIn } = useAuthStore();
                     src={`/${item.image}`}
                     alt={item.name}
                   />
-
                   <div className="px-2 flex flex-col justify-center">
-                    {" "}
                     <div className="font-semibold text-[16px]">{item.name}</div>
                     <div className="flex mt-1">
                       {stars.map((_, index) => (
@@ -171,7 +195,8 @@ const { setLoggedIn, isLoggedIn: storeLoggedIn } = useAuthStore();
             ))}
           </div>
 
-          <Card className="rounded p-4 ">
+          {/* Delivery Method */}
+          <Card className="rounded p-4">
             <span className="font-semibold text-[20px]">Delivery Method</span>
             <span className="text-[#7A7A7A] font-normal text-[14px]">
               Please select the preferred shipping method to use on this order.
@@ -192,14 +217,14 @@ const { setLoggedIn, isLoggedIn: storeLoggedIn } = useAuthStore();
                 </div>
               </div>
               <div className="flex flex-col justify-start items-start">
-                <label>Free Shipping</label>
+                <label>Express Shipping</label>
                 <div className="flex space-x-2">
                   <input
                     type="radio"
                     name="delivery"
-                    checked={selectedDelivery === "Free Shipping - $0.00"}
+                    checked={selectedDelivery === "Express Shipping - $5.00"}
                     onChange={() =>
-                      setSelectedDelivery("Free Shipping - $0.00")
+                      setSelectedDelivery("Express Shipping - $5.00")
                     }
                   />
                   <span className="text-[#7A7A7A]">Rate - $5.00</span>
@@ -208,9 +233,9 @@ const { setLoggedIn, isLoggedIn: storeLoggedIn } = useAuthStore();
             </div>
           </Card>
 
+          {/* Payment Method */}
           <Card className="rounded p-4 mt-4">
             <span className="font-semibold text-[20px]">Payment Method</span>
-
             <span className="text-[#7A7A7A] font-normal text-[14px]">
               Please select the preferred payment method to use on this order.
             </span>
@@ -240,7 +265,7 @@ const { setLoggedIn, isLoggedIn: storeLoggedIn } = useAuthStore();
               <input
                 type="radio"
                 name="payment"
-                checked={selectedPayment === "Bank Tranfer"}
+                checked={selectedPayment === "Bank Transfer"}
                 onChange={() => setSelectedPayment("Bank Transfer")}
               />
               <label className="text-[#7A7A7A] text-[14px]">
@@ -249,33 +274,33 @@ const { setLoggedIn, isLoggedIn: storeLoggedIn } = useAuthStore();
             </div>
           </Card>
 
-          <Card className="rounded-[5px] p-4 mt-4">
+          <Card className="rounded-[5px] p-4 mt-4 gap-1">
             <span className="font-semibold text-[20px]">Payment Method</span>
+            <img src="/asset/payment.png" className="" />
           </Card>
         </div>
 
-        {/* Card 2 */}
+        {/* Right Cards */}
         <div>
+          {/* Returning Customer / OTP */}
           <Card className="w-[856px] h-[455px] p-6 rounded">
             <p className="font-semibold text-[20px] text-[#2B2B2D]">Customer</p>
             <p className="text-[#2B2B2D]">Checkout Options</p>
 
             <form
-              onSubmit={handleSubmit}
+              onSubmit={handleOtpSubmit}
               className="flex flex-col gap-4 w-full "
             >
-              <p className="font-semibold text-[20px] text-[#2B2B2D] ">
+              <p className="font-semibold text-[20px] text-[#2B2B2D]">
                 Returning Customer
               </p>
-              {/* <p className="text-gray-600">
-                OTP sent to <strong>{emailInput}</strong>
-              </p> */}
 
               <div className="flex flex-col gap-1">
                 <label className="font-medium text-[#2B2B2D] mb-[14px]">
                   Email Address
                 </label>
                 <input
+                  required
                   type="text"
                   className="p-3 border rounded-md outline-none"
                   placeholder="Enter your email address"
@@ -294,32 +319,39 @@ const { setLoggedIn, isLoggedIn: storeLoggedIn } = useAuthStore();
                   onChange={(e) => setOtp(e.target.value)}
                 />
               </div>
-              <button type="button" onClick={() => sendOtp(emailInput)}>
-                Resend OTP
-              </button>
-
-              <div className="items-center flex justify-center pb-[10px]">
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => sendOtp(emailInput)}
+                  className="text-[#F53E32] font-semibold"
+                >
+                  Resend OTP
+                </button>
                 <button
                   type="submit"
-                  className="bg-[#F53E32] text-white py-2 w-[100px] rounded-md font-semibold "
+                  className="bg-[#F53E32] text-white py-2 px-4 rounded-md font-semibold"
                 >
                   Verify
                 </button>
               </div>
+
+              {message && <p className="text-red-500">{message}</p>}
             </form>
           </Card>
 
+          {/* Billing Details */}
           <Card className="rounded p-4 mt-4">
             <form>
               <label className="text-[20px] font-semibold">
                 Billing Details
               </label>
               <p className="mt-6">Checkout Options</p>
+
               <div className="flex gap-4 mt-6">
-                {/* First Input */}
                 <div className="flex flex-col gap-1 w-full">
                   <label className="font-medium">First Name*</label>
                   <input
+                    required
                     type="text"
                     className="p-3 border rounded-md outline-none"
                     placeholder="Enter your first name"
@@ -327,11 +359,10 @@ const { setLoggedIn, isLoggedIn: storeLoggedIn } = useAuthStore();
                     onChange={(e) => setFirstName(e.target.value)}
                   />
                 </div>
-
-                {/* Second Input */}
                 <div className="flex flex-col gap-1 w-full">
                   <label className="font-medium">Last Name*</label>
                   <input
+                    required
                     type="text"
                     className="p-3 border rounded-md outline-none"
                     placeholder="Enter your last name"
@@ -341,61 +372,57 @@ const { setLoggedIn, isLoggedIn: storeLoggedIn } = useAuthStore();
                 </div>
               </div>
 
-              <div className="flex flex-col gap-1">
+              <div className="flex flex-col gap-1 mt-6">
                 <label className="font-medium">Address</label>
                 <input
+                  required
                   type="text"
                   className="p-3 border rounded-md outline-none"
-                  placeholder=""
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
                 />
               </div>
+
               <div className="flex gap-4 mt-6">
-                {/* First Input */}
                 <div className="flex flex-col gap-1 w-full">
                   <label className="font-medium">City *</label>
                   <input
+                    required
                     type="text"
                     className="p-3 border rounded-md outline-none"
-                    placeholder=""
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
                   />
                 </div>
-
-                {/* Second Input */}
                 <div className="flex flex-col gap-1 w-full">
                   <label className="font-medium">Post Code</label>
                   <input
+                    required
                     type="text"
                     className="p-3 border rounded-md outline-none"
-                    placeholder="Post Code"
                     value={postCode}
                     onChange={(e) => setPostCode(e.target.value)}
                   />
                 </div>
               </div>
+
               <div className="flex gap-4 mt-6">
-                {/* First Input */}
                 <div className="flex flex-col gap-1 w-full">
                   <label className="font-medium">Country *</label>
                   <input
+                    required
                     type="text"
                     className="p-3 border rounded-md outline-none"
-                    placeholder=""
                     value={country}
                     onChange={(e) => setCountry(e.target.value)}
                   />
                 </div>
-
-                {/* Second Input */}
                 <div className="flex flex-col gap-1 w-full">
                   <label className="font-medium">Region State</label>
                   <input
+                    required
                     type="text"
                     className="p-3 border rounded-md outline-none"
-                    placeholder=""
                     value={regionState}
                     onChange={(e) => setRegionState(e.target.value)}
                   />
@@ -403,19 +430,30 @@ const { setLoggedIn, isLoggedIn: storeLoggedIn } = useAuthStore();
               </div>
             </form>
           </Card>
+
+          {/* Place Order Button */}
           <div className="justify-end flex mt-4">
             <button
-              type="submit"
+              type="button"
+              disabled={!isOrderButtonEnabled}
               onClick={handlePlaceOrder}
-  disabled={!storeLoggedIn}
-              className={`bg-[#F53E32] text-white px-6 py-3 rounded-md font-semibold flex items-center justify-center gap-2 w-[150px] ${
-                !isLoggedIn ? "opacity-50 cursor-not-allowed" : ""
+              className={`px-6 py-3 rounded-md font-semibold flex items-center justify-center gap-2 w-[150px] transition-all ${
+                isOrderButtonEnabled
+                  ? "text-white bg-[#F53E32] hover:bg-[#F63E32] cursor-pointer opacity-100"
+                  : "text-gray-400 bg-gray-300 cursor-not-allowed opacity-50"
               }`}
+              style={{ 
+                pointerEvents: isOrderButtonEnabled ? 'auto' : 'none'
+              }}
             >
               Place Order
             </button>
+      
           </div>
         </div>
+      </div>
+      <div className="mt-[300px]">
+        <Footer />
       </div>
     </>
   );

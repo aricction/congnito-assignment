@@ -1,10 +1,13 @@
 "use client";
 
-import { CreateUserByRegisterRequest, GetUserByLoginRequest } from "@/app/types/types-for-auth";
+import {
+  CreateUserByRegisterRequest,
+  GetUserByLoginRequest,
+} from "@/app/types/types-for-auth";
 import { useState, ChangeEvent, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { useUserStore } from "@/store/users-store";
-import { getUserByLogin} from "@/lib/api/auth-api";
+import { getUserByLogin } from "@/lib/api/auth-api";
 
 export default function Login() {
   const [form, setForm] = useState<GetUserByLoginRequest>({
@@ -29,7 +32,7 @@ export default function Login() {
       setMessage(response.message);
 
       if (response.status === "success" && response.data?.user) {
-        setUser(response.data.user);
+        setUser({ user: response.data.user });
         router.push("/");
       }
     } catch (error: any) {

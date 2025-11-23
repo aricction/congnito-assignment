@@ -14,6 +14,7 @@ import { useProductStore } from "@/store/product-store";
 import { useCartStore } from "@/store/cart-store";
 import { StarIcon } from "@heroicons/react/24/solid";
 import ProductFilterComponent from "@/app/components/product-filter-component/page";
+import Footer from "@/app/components/footer-component/page";
 
 export default function ProductDetailsPage() {
   const [quantity, setQuantity] = useState(1);
@@ -136,7 +137,7 @@ const product = getProductById(productId) || getBestSellingById(productId) || ge
             </div>
           </div>
         </div>
-        <div className=" justify-center flex mt-5 left-[120px]">
+        <div className=" justify-center flex mt-5 left-[120px] pb-12">
           <Card className="w-[996px] p-4 rounded-md">
             <div>
               <h1 className="font-semibold text-[16px] text-[#F53E32] cursor-pointer pb-[23px] border-b">
@@ -169,7 +170,11 @@ const product = getProductById(productId) || getBestSellingById(productId) || ge
             </div>
           </Card>
         </div>
+        
       </div>
+      <div>
+          <Footer />
+        </div>
     </>
   );
 }

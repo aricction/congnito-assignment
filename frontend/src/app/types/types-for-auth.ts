@@ -13,8 +13,10 @@ export interface AuthResponse {
   status: string;
   message: string;
   data?: {
-    id: string;
-    email: string;
-    name?: string;
+    user: {
+      id: string;
+      email: string;
+      name?: string;
+    };
   } | null;
 }

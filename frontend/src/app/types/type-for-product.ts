@@ -7,8 +7,8 @@ export interface Product {
   category?: string;
   type: string;
   rating: number;
-  by: string;
-  span: string;
-  spanColor: string;
+  by?: string;
+  span?: string;
+  spanColor?: string;
   quantity: number;
 }

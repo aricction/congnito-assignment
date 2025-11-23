@@ -28,7 +28,7 @@ export default function AuthModal({ onClose }: AuthModalProps) {
         {user ? (
           <div className="flex flex-col items-center gap-4">
             <h2 className="text-xl font-semibold mb-2 text-center">
-              Welcome, {user?.name || user?.email}!
+              Welcome, {user.user.name || user.user.email}!
             </h2>
             <button
               onClick={handleLogout}
