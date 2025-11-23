@@ -28,7 +28,7 @@ function CheckoutEmail({
 
 export default function ProductCheckoutPage() {
   const stars = Array(5).fill(0);
-  const { cartItems, getCartTotal, clearCart } = useCartStore();
+  const { cartItems, getCartTotal, clearCart, updateQuantity, removeFromCart } = useCartStore();
   const storeLoggedIn = useAuthStore((state) => state.isLoggedIn);
   const setLoggedIn = useAuthStore((state) => state.setLoggedIn);
   const router = useRouter();
@@ -154,17 +154,17 @@ export default function ProductCheckoutPage() {
             <p className="font-bold text-[20px]">Summary</p>
             <div className="flex justify-between items-center mt-4">
               <p className="text-[#7A7A7A] text-[13px]">Sub-Total</p>
-              <p className="text-[#7A7A7A] text-[13px] font-medium">${getCartTotal().toFixed(2)}</p>
+              <p className="text-black text-[13px] font-medium">${getCartTotal().toFixed(2)}</p>
             </div>
             <div className="flex justify-between items-center mt-2">
               <p className="text-[#7A7A7A] text-[13px]">Delivery Charges</p>
-              <p className="text-[#7A7A7A] text-[13px] font-medium">
+              <p className="text-black text-[13px] font-medium">
                 {selectedDelivery.includes("Free") ? "$0.00" : "$5.00"}
               </p>
             </div>
             <div className="flex justify-between items-center border-t mt-3 pt-3">
               <p className="font-medium">Total Amount:</p>
-              <p className="font-semibold text-[18px] text-[#F53E32]">
+              <p className="font-semibold text-[18px] text-black">
                 ${(getCartTotal() + (selectedDelivery.includes("Free") ? 0 : 5)).toFixed(2)}
               </p>
             </div>
@@ -207,6 +207,7 @@ export default function ProductCheckoutPage() {
                           )}
                         </div>
                       </div>
+                      
                  
                     </div>
                   </div>

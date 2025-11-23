@@ -31,6 +31,8 @@ export default function ProductDetailsPage() {
     getSelectedDealsProduct(productId);
 
   const addToCart = useCartStore((state) => state.addToCart);
+  const updateQuantity = useCartStore((state) => state.updateQuantity);
+  const cartItems = useCartStore((state) => state.cartItems);
 
   if (!product) {
     return (
@@ -39,6 +41,9 @@ export default function ProductDetailsPage() {
       </div>
     );
   }
+
+  // Check if product already exists in cart
+  const existingCartItem = cartItems.find((item) => item.id === product.id);
 
   // Calculate total price based on quantity
   const calculateTotalPrice = () => {
@@ -59,7 +64,13 @@ export default function ProductDetailsPage() {
     setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
 
   const handleAddToCart = () => {
-    addToCart({ ...product, quantity });
+    if (existingCartItem) {
+      // If item exists, update the quantity to the new quantity
+      updateQuantity(product.id, quantity);
+    } else {
+      // If new item, add it with the specified quantity
+      addToCart(product, quantity);
+    }
   };
 
   return (
@@ -138,11 +149,7 @@ export default function ProductDetailsPage() {
                     ${totalOldPrice.toFixed(2)}
                   </p>
                 )}
-                {quantity > 1 && (
-                  <p className="text-sm text-[#7A7A7A] ml-2">
-                    (${( product.price).toFixed(2)} × {quantity})
-                  </p>
-                )}
+              
               </div>
             </div>
 
